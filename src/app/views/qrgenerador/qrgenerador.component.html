@@ -1,0 +1,41 @@
+<app-header></app-header>
+<br>
+<form class="form-inline container " [formGroup]="form" (ngSubmit)="codeGenerate()">
+    <div class="row">
+        <div class="col">
+            <label>
+                Lison
+            </label>
+            <select class="form-select"  formControlName="lison"  [ngClass]="{ 'is-invalid': submitted && f['lison'].errors }">
+                <option value='' selected disabled>Seleccionar</option>
+                <option value="24a854-5451">24a854-5451</option>
+                <option value="24a854-5452">24a854-5452</option>
+                <option value="24a854-5453">24a854-5453</option>
+                <option value="24a854-5454">24a854-5454</option>
+                <option value="24a854-5455">24a854-5454</option>
+                <option value="24a854-5456">24a854-5456</option>
+            </select>
+        </div>
+        <div class="col">
+            <label>
+                Inicio
+            </label>
+            <input type="number" class="form-control" placeholder="1" aria-label="1" formControlName="inicio"
+                [ngClass]="{ 'is-invalid': submitted && f['inicio'].errors }" min="1">
+        </div>
+        <div class="col">
+            <label>
+                Fin
+            </label>
+            <input type="number" class="form-control" placeholder="10" aria-label="10" formControlName="fin" min="1"
+            [ngClass]="{ 'is-invalid': submitted && f['fin'].errors }">
+        </div>
+        <div class="col">
+            <br>
+            <button type="submit" class="btn btn-primary" value="Iniciar">Enviar</button>
+        </div>
+    </div>
+</form>
+<div class="alert alert-danger" *ngIf="errorStatus">
+    <div>{{ errorMsg }}</div>
+</div>

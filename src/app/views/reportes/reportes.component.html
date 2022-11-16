@@ -1,0 +1,121 @@
+<app-header></app-header>
+<div class="container">
+    <button type="button" class="btn" (click)="onTable()">Recargar <img src="assets\img\refresh.png" alt=""
+            height="20"></button>
+    <button type="button" class="btn " (click)="onExcel()">Excel <img src="assets\img\excel.png" alt=""
+            height="20"></button>
+    <hr>
+    <form class="form-inline"  [formGroup]="form" (ngSubmit)="buscar()" >
+        <div class="row">
+            <div class="col">
+                <label>
+                    Area
+                </label>
+                <select class="form-select" formControlName="area"  >
+                    <option value="" selected disabled>Seleccionar</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <div class="col">
+                <label>
+                    Lison
+                </label>
+                <select class="form-select" formControlName="lison" >
+                    <option value="" selected disabled>Seleccionar</option>
+                    <option value="1">24a854-5451</option>
+                    <option value="2">24a854-5452</option>
+                    <option value="3">24a854-5453</option>
+                    <option value="4">24a854-5454</option>
+                    <option value="5">24a854-5455</option>
+                    <option value="6">24a854-5456</option>
+                </select>
+            </div>
+            <div class="col">
+                <label>
+                    Economico
+                </label>
+                <input type="number" class="form-control" placeholder="10"  formControlName="economico" min="0">
+            </div>
+            <div class="col">
+                <label>
+                    Usuario
+                </label>
+                <input type="text" class="form-control" placeholder="Juan" formControlName="usuario">
+            </div>
+            <div class="col">
+                <label>
+                    N° Empleado
+                </label>
+                <input type="number" class="form-control" placeholder="38087" formControlName="n_empleado" min="0">
+            </div>
+
+
+            <div class="col">
+                <label>
+                    Inicio
+                </label>
+                <input type="date" class="form-control"  formControlName="inicio">
+            </div>
+            <div class="col">
+                <label>
+                    Fin
+                </label>
+                <input type="date" class="form-control"  formControlName="fin">
+            </div>
+
+
+            <div class="col">
+                <br>
+                <button type="submit" class="btn btn-primary"  value="enviar">Buscar <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                    </svg></button>
+            </div>
+        </div>
+
+    </form>
+    <hr>
+    <div class="alert alert-danger" *ngIf="errorStatus">
+        <div>{{ errorMsg }}</div>
+    </div>
+    <div class="row">
+        <div id="table" class="table-responsive height">
+            <table class="table  table-hover  col col-md-auto height"  id="excel-table" >
+                <thead class="thead">
+                    <tr align="center">
+                        <th scope="col">ID</th>
+                        <th scope="col">N° Parte</th>
+                        <th scope="col">lison</th>
+                        <th scope="col">Economico</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">N° Empleado</th>
+                        <th scope="col">Estatus</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let proceso of empList" align="center">
+                        <th scope="row">{{proceso.id_proceso}}</th>
+                        <td>{{proceso.s_parte}}</td>
+                        <td>{{proceso.lison.s_descripcion}}</td>
+                        <td>{{proceso.s_economico}}</td>
+                        <td>{{proceso.s_usuario}}</td>
+                        <td>{{proceso.n_empleado}}</td>
+                        <td>{{proceso.s_estatus}}</td>
+                        <td>{{proceso.id_area}}</td>
+                        <td>{{proceso.d_fecha_reg | date:'dd/MM/yyyy' }}</td>
+                        <td>{{proceso.d_fecha_reg | date:'H:mm:ss' }}</td>
+                    </tr>
+
+            </table>
+        </div>
+    </div>
+</div>

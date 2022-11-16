@@ -1,0 +1,29 @@
+
+
+<div class="back" >
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <br>
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="assets\img\servimsa-logo.svg" id="icon" alt="User Icon" height="100" />
+            </div>
+            <hr>
+            <!-- Login Form -->
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+                <input type="number" id="usuario" class="fadeIn second form-control" formControlName="usuario"
+                    placeholder="N° control" [ngClass]="{ 'is-invalid': submitted && f['usuario'].errors }">
+                <input type="password" id="password" class="fadeIn third form-control" formControlName="password"
+                    placeholder="Contraseña" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                <input type="submit" class="fadeIn fourth" value="Iniciar">
+            </form>
+
+            <!-- Remind Passowrd -->
+            <div class="alert alert-danger" *ngIf="errorStatus">
+                <div>{{ errorMsg }}</div>
+            </div>
+
+        </div>
+    </div>
+</div>

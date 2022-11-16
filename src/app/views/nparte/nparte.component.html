@@ -1,0 +1,214 @@
+<app-header></app-header>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+            <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit(checkoutForm.value)">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label >Proceso</label>
+                        <input type="email" class="form-control" id="inputEmail4" placeholder="nparte"
+                            formControlName="nparte" [ngClass]="{ 'is-invalid': submitted && f['nparte'].errors }">
+                        <div *ngIf="submitted && f['nparte'].errors" class="invalid-feedback">
+                            <div *ngIf="f['nparte'].errors['required']">nparte es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label >N° parte</label>
+                        <input type="email" class="form-control" id="inputEmail4" formControlName="proceso"
+                            placeholder="proceso" [ngClass]="{ 'is-invalid': submitted && f['proceso'].errors }">
+                        <div *ngIf="submitted && f['proceso'].errors" class="invalid-feedback">
+                            <div *ngIf="f['proceso'].errors['required']">proceso es requerido</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label >Lison</label>
+                        <select class="form-select" formControlName="lison"   [ngClass]="{ 'is-invalid': submitted && f['lison'].errors }">
+                            <option value="" [selected]="{value:0}" disabled>Seleccionar</option>
+                            <option value="1">24a854-5451</option>
+                            <option value="2">24a854-5452</option>
+                            <option value="3">24a854-5453</option>
+                            <option value="4">24a854-5454</option>
+                            <option value="5">24a854-5455</option>
+                            <option value="6">24a854-5456</option>
+                        </select>
+                        <div *ngIf="submitted && f['lison'].errors" class="invalid-feedback">
+                            <div *ngIf="f['lison'].errors['required']">lison es requerido</div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div>
+
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Enviar</button> &nbsp;&nbsp;
+                    <button type="button" (click)="onReset()" class="btn btn-warning float-right"> Resetear </button>
+                </div>
+            </form>
+            <div class="alert alert-danger" *ngIf="errorStatus">
+                <div>{{ errorMsg }}</div>
+            </div>
+        </div>
+        <div class="col height">
+            <button type="button" class="btn" (click)="onEliminados()">Eliminados <img src="assets\img\refresh.png"
+                    alt="" height="20"></button>
+            <button type="button" class="btn" (click)="ontable()">Ver lista<img src="assets\img\correo.png" alt=""
+                    height="20"></button>
+            <div *ngIf="alert">
+                <div class="alert {{type}} alert-dismissible fade show" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn  right" data-dismiss="alert" aria-label="Close" (click)="close()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+            <div id="table" class="table-responsive ">
+                <table class="table  table-hover  col col-md-auto ">
+                    <thead class="thead">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Proceso</th>
+                            <th scope="col">N* parte</th>
+                            <th scope="col">Lison</th>
+                            <th scope="col" *ngIf="!verEliminados">Actualizar</th>
+                            <th scope="col" *ngIf="!verEliminados">Eliminar</th>
+                            <th scope="col" *ngIf="verEliminados">Eliminado</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let areas of empList">
+                        <tr *ngIf="!verEliminados">
+                            <th scope="row">{{areas.id_area}}</th>
+                            <td>{{areas.s_descripcion}}</td>
+                            <td>{{areas.n_parte}}</td>
+                            <td>{{areas.lison.s_descripcion}}</td>
+                            <td><button class="btn btn-success" data-toggle="modal" data-target="#exampleModal"
+                                    (click)="openPopup(areas.id_area,areas.n_parte, areas.lison.s_descripcion, areas.s_descripcion)"> <img
+                                        src="assets\img\refreshblanco.png" alt="" height="20"></button></td>
+                            <td> <button class="btn btn-danger" (click)="openPopup2(areas.id_area)"><img
+                                        src="assets\img\remove.png" alt="" height="20"></button></td>
+                        </tr>
+                        <tr *ngIf="verEliminados">
+                            <th scope="row">{{areas.id_area}}</th>
+                            <td>{{areas.s_descripcion}}</td>
+                            <td>{{areas.n_parte}}</td>
+                            <td>{{areas.lison!.s_descripcion}}</td>
+                            <td> <button class="btn btn-success" (click)="onDelete(areas.id_area, 1)">Restaurar</button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle2}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Actualizar</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form [formGroup]="checkoutForm2" (ngSubmit)="updateSubmit(checkoutForm2.value)">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label >Proceso</label>
+                                        <input type="text" class="form-control" id="nparte" placeholder="nparte"
+                                            formControlName="proceso2"
+                                            [ngClass]="{ 'is-invalid': submitted2 && f2['proceso2'].errors }"
+                                            value="{{proceso}}">
+                                        <div *ngIf="submitted2 && f2['proceso2'].errors" class="invalid-feedback">
+                                            <div *ngIf="f2['proceso2'].errors['required']">nparte es requerido</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label >N° parte</label>
+                                        <input type="text" class="form-control" id="lison"
+                                            formControlName="nparte2" value="{{nparte}}" placeholder="nparte"
+                                            [ngClass]="{ 'is-invalid': submitted2 && f2['nparte2'].errors }">
+                                        <div *ngIf="submitted2 && f2['nparte2'].errors" class="invalid-feedback">
+                                            <div *ngIf="f2['nparte2'].errors['required']">lison es requerido</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label >Lison</label>
+                                        <select class="form-select" formControlName="lison2" [ngClass]="{ 'is-invalid': submitted2 && f2['lison2'].errors }">
+                                            <option value="" [selected]="{value:1}" disabled>{{lison}}</option>
+                                            <option value="1">24a854-5450</option>
+                                            <option value="2">24a854-5451</option>
+                                            <option value="3">24a854-5452</option>
+                                            <option value="4">24a854-5453</option>
+                                            <option value="5">24a854-5454</option>
+                                            <option value="6">24a854-5455</option>
+                                            <option value="7">24a854-5456</option>
+                                        </select>
+                                        <div *ngIf="submitted2 && f2['lison2'].errors" class="invalid-feedback">
+                                            <div *ngIf="f2['lison2'].errors['required']">lison es requerido</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div>
+
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">Enviar</button> &nbsp;&nbsp;
+                                    <button type="button" (click)="onReset()" class="btn btn-warning float-right">
+                                        Resetear </button>
+                                </div>
+                            </form>
+                            <div class="alert alert-danger" *ngIf="errorStatus">
+                                <div>{{ errorMsg }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="closePopup()">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Eliminar</h3>
+            </div>
+            <h2 class="text-center"><br>¿Esta seguro que desea eliminar el proceso? </h2><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" (click)="closePopup()">
+                    <img src="assets\img\delete.png" alt="" height="20">
+                </button>
+                <form (ngSubmit)="onDelete(id,0)">
+                    <button type="submit" class="btn btn-danger"><img src="assets\img\remove.png" alt=""
+                            height="20"></button> &nbsp;&nbsp;
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
