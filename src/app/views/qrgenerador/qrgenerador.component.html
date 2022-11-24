@@ -8,12 +8,7 @@
             </label>
             <select class="form-select"  formControlName="lison"  [ngClass]="{ 'is-invalid': submitted && f['lison'].errors }">
                 <option value='' selected disabled>Seleccionar</option>
-                <option value="24a854-5451">24a854-5451</option>
-                <option value="24a854-5452">24a854-5452</option>
-                <option value="24a854-5453">24a854-5453</option>
-                <option value="24a854-5454">24a854-5454</option>
-                <option value="24a854-5455">24a854-5454</option>
-                <option value="24a854-5456">24a854-5456</option>
+                <option *ngFor="let c of empList" [ngValue]="c.s_descripcion">{{c.s_descripcion}}</option>
             </select>
         </div>
         <div class="col">

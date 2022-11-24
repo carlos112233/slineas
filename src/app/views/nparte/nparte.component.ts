@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class NparteComponent implements OnInit {
   vehiculos: Array<any> = [];
+  lisons: Array<any> = [];
   form: Array<any> = [];
   empList: Array<any> = [];
   verEliminados: boolean = false;
@@ -51,6 +52,7 @@ export class NparteComponent implements OnInit {
     } else {
       this.onEliminados();
     }
+    this.onSelect();
   }
 
 
@@ -188,6 +190,24 @@ export class NparteComponent implements OnInit {
 
       }
     });
+  }
+
+  onSelect() {
+    while (this.lisons.length) {
+      this.lisons.pop()
+    }
+    this.service.getLison().subscribe(data => {
+      for (let index = 0; index < data.data.lisons.length; index++) {
+        if (data.data.lisons[index].b_activo == "1") {
+          var id = data.data.lisons[index].id_lison;
+          if (id != 9 && id != 11 && id != 14 && id != 15 && id != 17) {
+            this.lisons.push(data.data.lisons[index]);
+          }
+        }
+      }
+
+    });
+
   }
 
 }

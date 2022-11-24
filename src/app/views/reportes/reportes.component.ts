@@ -10,13 +10,15 @@ import * as XLSX from 'xlsx';
 })
 export class ReportesComponent implements OnInit {
   empList: Array<any> = [];
+  lisons: Array<any> = [];
+  areas: Array<any> = [];
   errorStatus: Boolean = false;
   errorMsg: string = "";
   form!: FormGroup;
   submitted = false;
   fileName= 'Reporte.xlsx';
 
-  constructor(private service: LoginService, private http:HttpClient, private formBuilder: FormBuilder) { }
+  constructor(private service: LoginService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.onTable();
@@ -29,6 +31,7 @@ export class ReportesComponent implements OnInit {
       inicio:[''],
       fin:[''],
     });
+    this.onSelect();
   }
 
   get f() {
@@ -84,5 +87,35 @@ export class ReportesComponent implements OnInit {
       inicio:[''],
       fin:[''],
     });
+  }
+
+  onSelect() {
+    while (this.lisons.length) {
+      this.lisons.pop()
+      this.areas.pop()
+    }
+    this.service.getLison().subscribe(data => {
+      for (let index = 0; index < data.data.lisons.length; index++) {
+        if (data.data.lisons[index].b_activo == "1") {
+          var id = data.data.lisons[index].id_lison;
+          if (id != 9 && id != 11 && id != 14 && id != 15 && id != 17) {
+            this.lisons.push(data.data.lisons[index]);
+          }
+        }
+      }
+
+    });
+
+    this.service.getAreas().subscribe(data => {
+      for (let index = 0; index < data.data.areas.length; index++) {
+        if (data.data.areas[index].b_activo == "1") {
+          
+            this.areas.push(data.data.areas[index]);
+          
+        }
+      }
+
+    });
+
   }
 }

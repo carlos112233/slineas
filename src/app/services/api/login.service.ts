@@ -7,6 +7,7 @@ import { LoginI } from 'src/app/models/login.interface';
 import { LoginLi } from 'src/app/models/loginL.interface';
 import { ResponseI } from 'src/app/models/respose.interface';
 import { Message } from 'src/app/models/message.interface';
+import { Lisons } from 'src/app/models/lison.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -136,5 +137,20 @@ export class LoginService {
       "b_activo":"1"
     });
     return this.http.post<Message>(direct, body, { 'headers': headers });
+  }
+
+  getLison(): Observable<Lisons> {
+    let direct = this.url2 + "api/lison";
+    var dato = localStorage.getItem('token');
+    const headers = {
+      "Content-Type": "application/json",
+      "Licencia": 'Iyp4wP19rX4LN51i75UtBmi9rnE3tzCJ183a862T2yFZW5MDegcbAwhGqxdQDHlKSo97vkqfO3oRYJFMVu68eSQ0j27G6AsKLPH4',
+      "Token": "" + dato
+    }
+    const body = JSON.stringify({
+      "s_orden": "DESC",
+      "s_top": "1"
+    });
+    return this.http.get<Lisons>(direct, { 'headers': headers });
   }
 }

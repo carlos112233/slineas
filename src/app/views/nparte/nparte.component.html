@@ -30,12 +30,7 @@
                         <label >Lison</label>
                         <select class="form-select" formControlName="lison"   [ngClass]="{ 'is-invalid': submitted && f['lison'].errors }">
                             <option value="" [selected]="{value:0}" disabled>Seleccionar</option>
-                            <option value="1">24a854-5451</option>
-                            <option value="2">24a854-5452</option>
-                            <option value="3">24a854-5453</option>
-                            <option value="4">24a854-5454</option>
-                            <option value="5">24a854-5455</option>
-                            <option value="6">24a854-5456</option>
+                            <option *ngFor="let c of lisons" [ngValue]="c.id_lison">{{c.s_descripcion}}</option>
                         </select>
                         <div *ngIf="submitted && f['lison'].errors" class="invalid-feedback">
                             <div *ngIf="f['lison'].errors['required']">lison es requerido</div>

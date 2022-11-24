@@ -13,26 +13,7 @@
                 </label>
                 <select class="form-select" formControlName="area"  >
                     <option value="" selected disabled>Seleccionar</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                </select>
-            </div>
-            <div class="col">
-                <label>
-                    Lison
-                </label>
-                <select class="form-select" formControlName="lison" >
-                    <option value="" selected disabled>Seleccionar</option>
-                    <option value="1">24a854-5451</option>
-                    <option value="2">24a854-5452</option>
-                    <option value="3">24a854-5453</option>
-                    <option value="4">24a854-5454</option>
-                    <option value="5">24a854-5455</option>
-                    <option value="6">24a854-5456</option>
+                    <option *ngFor="let c of areas" [ngValue]="c.id_area">{{c.s_descripcion}}</option>
                 </select>
             </div>
             <div class="col">
