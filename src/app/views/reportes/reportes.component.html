@@ -13,7 +13,7 @@
                 </label>
                 <select class="form-select" formControlName="area"  >
                     <option value="" selected disabled>Seleccionar</option>
-                    <option *ngFor="let c of areas" [ngValue]="c.id_area">{{c.s_descripcion}}</option>
+                    <option *ngFor="let c of areas" [ngValue]="c.id_area">{{c.s_descripcion}} - {{c.id_area}}</option>
                 </select>
             </div>
             <div class="col">
